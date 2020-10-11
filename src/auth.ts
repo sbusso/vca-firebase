@@ -14,7 +14,7 @@ export function useAuth(): any {
   return result
 }
 
-export async function provideAuth() {
+export async function provideAuth(): Promise<void> {
   const { firebase } = useFirebase()
 
   const state = reactive({

@@ -5,9 +5,9 @@ import useDoc from './doc.js'
 
 // import { config } from 'firebase'
 
-function initFirebase(config: any) {
+async function initFirebase(config: any) {
   provideFirebase(config)
-  provideAuth()
+  await provideAuth()
   provideCollections()
 }
 

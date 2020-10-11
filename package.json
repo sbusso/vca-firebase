@@ -3,11 +3,9 @@
   "version": "0.0.3",
   "license": "MIT",
   "author": "Aleksey Razbakov",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "files": [
-    "src"
-  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": ["lib/**/*"],
   "scripts": {
     "dev": "vite",
     "build": "vite build",
