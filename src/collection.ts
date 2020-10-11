@@ -4,12 +4,12 @@ import { useAuth } from './auth.js'
 
 const CollectionSymbol = Symbol('FirebaseCollection')
 
-export function provideCollections() {
+export function provideCollections(): any {
   provide(CollectionSymbol, reactive({}))
 }
 
-export function useCollection(name, filter) {
-  const state = inject(CollectionSymbol)
+export function useCollection(name: string, filter: any): any {
+  const state: any = inject(CollectionSymbol)
 
   if (!state) {
     throw Error('No Collection provided')
@@ -43,19 +43,22 @@ export function useCollection(name, filter) {
         collection = collection.where(field, '==', value)
       }
 
-      collection.onSnapshot({ includeMetadataChanges: true }, (snapshot) => {
-        snapshot.docChanges().forEach((change) => {
-          if (change.type === 'removed') {
-            delete state[hash][change.doc.id]
-          } else {
-            state[hash][change.doc.id] = change.doc.data()
-          }
-        })
-      })
+      collection.onSnapshot(
+        { includeMetadataChanges: true },
+        (snapshot: any) => {
+          snapshot.docChanges().forEach((change: any) => {
+            if (change.type === 'removed') {
+              delete state[hash][change.doc.id]
+            } else {
+              state[hash][change.doc.id] = change.doc.data()
+            }
+          })
+        },
+      )
     })
   }
 
-  function get(id) {
+  function get(id: string) {
     if (!state[hash]) {
       return {}
     }

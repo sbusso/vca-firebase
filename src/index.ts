@@ -3,7 +3,9 @@ import { provideCollections, useCollection } from './collection.js'
 import { provideAuth, useAuth } from './auth.js'
 import useDoc from './doc.js'
 
-function initFirebase(config) {
+// import { config } from 'firebase'
+
+function initFirebase(config: any) {
   provideFirebase(config)
   provideAuth()
   provideCollections()

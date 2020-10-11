@@ -4,7 +4,7 @@ import 'firebase/firestore'
 
 const FirebaseSymbol = Symbol('Firebase')
 
-export function useFirebase() {
+export function useFirebase(): any {
   const result = inject(FirebaseSymbol)
 
   if (!result) {
@@ -14,7 +14,7 @@ export function useFirebase() {
   return result
 }
 
-export function provideFirebase(options) {
+export function provideFirebase(options: any) {
   if (firebase.apps.length > 0) {
     return
   }
@@ -31,11 +31,11 @@ export function provideFirebase(options) {
     .catch((err) => {
       if (err.code === 'failed-precondition') {
         throw new Error(
-          'Multiple tabs open, persistence can only be enabled in one tab at a a time.'
+          'Multiple tabs open, persistence can only be enabled in one tab at a a time.',
         )
       } else if (err.code === 'unimplemented') {
         throw new Error(
-          'The current browser does not support all of the features required to enable persistence'
+          'The current browser does not support all of the features required to enable persistence',
         )
       }
     })

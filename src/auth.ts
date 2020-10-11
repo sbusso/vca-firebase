@@ -4,7 +4,7 @@ import 'firebase/auth'
 
 const AuthSymbol = Symbol('FirebaseAuth')
 
-export function useAuth() {
+export function useAuth(): any {
   const result = inject(AuthSymbol)
 
   if (!result) {
@@ -14,7 +14,7 @@ export function useAuth() {
   return result
 }
 
-export function provideAuth() {
+export async function provideAuth() {
   const { firebase } = useFirebase()
 
   const state = reactive({
@@ -27,10 +27,10 @@ export function provideAuth() {
   firebase.auth().onAuthStateChanged(setUser)
 
   if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
-    signInWithEmailLink(window.location.href)
+    await signInWithEmailLink(window.location.href)
   }
 
-  async function setUser(user) {
+  async function setUser(user: any) {
     state.user = user
     state.uid = user ? user.uid : null
     state.loading = false
@@ -39,18 +39,18 @@ export function provideAuth() {
 
   async function signOut() {
     await firebase.auth().signOut()
-    setUser(null)
+    await setUser(null)
   }
 
   async function signInAnonymously() {
     await firebase.auth().signInAnonymously()
   }
 
-  async function signInWithEmailLink(link) {
+  async function signInWithEmailLink(link: string) {
     state.signingIn = true
 
     // todo: add email extraction from url
-    let email = ''
+    const email = ''
     if (!email) {
       console.error('email is missing')
     }
@@ -58,7 +58,7 @@ export function provideAuth() {
     await firebase.auth().signInWithEmailLink(email, link)
   }
 
-  async function sendSignInLinkToEmail(email) {
+  async function sendSignInLinkToEmail(email: string) {
     const actionCodeSettings = {
       // todo: add to url: ?email=email
       url: window.location.href,

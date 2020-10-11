@@ -2,7 +2,7 @@ import { reactive, toRefs, computed } from 'vue'
 import { useFirebase } from './firebase.js'
 import { useAuth } from './auth.js'
 
-export default function useDoc(name) {
+export default function useDoc(name: string): any {
   const { firestore } = useFirebase()
   const { uid } = useAuth()
 
@@ -10,16 +10,16 @@ export default function useDoc(name) {
     loading: false,
     saving: false,
     exists: false,
-    doc: null,
-    id: null,
+    doc: <any | null>null,
+    id: <any | null>null,
     slug: null,
   })
 
   const collection = firestore.collection(name)
 
-  function sync(id) {
+  const sync = function (id: string) {
     state.loading = true
-    collection.doc(id).onSnapshot((doc) => {
+    collection.doc(id).onSnapshot((doc: any) => {
       state.loading = false
       state.exists = doc.exists
 
@@ -33,7 +33,7 @@ export default function useDoc(name) {
     })
   }
 
-  async function load(id) {
+  const load = async function (id: string) {
     state.loading = true
 
     const doc = await collection.doc(id).get()
@@ -56,7 +56,7 @@ export default function useDoc(name) {
     return true
   }
 
-  async function find(param, value) {
+  async function find(param: any, value: any) {
     state.loading = true
 
     const filteredCollection = await collection.where(param, '==', value).get()
@@ -79,8 +79,7 @@ export default function useDoc(name) {
 
     return true
   }
-
-  async function update(id, data) {
+  async function update(id: string, data: any) {
     state.saving = true
 
     const changes = {
@@ -95,8 +94,7 @@ export default function useDoc(name) {
 
     return result
   }
-
-  async function set(id, data) {
+  async function set(id: string, data: any) {
     state.saving = true
 
     const result = await collection.doc(id).set(data)
@@ -106,7 +104,7 @@ export default function useDoc(name) {
     return result
   }
 
-  async function remove(id) {
+  async function remove(id: string) {
     state.saving = true
 
     const result = await collection.doc(id).delete()
@@ -116,7 +114,7 @@ export default function useDoc(name) {
     return result
   }
 
-  async function create(data) {
+  async function create(data: any) {
     state.saving = true
 
     const doc = await collection.add({
@@ -134,7 +132,7 @@ export default function useDoc(name) {
   }
 
   const isCreator = computed(
-    () => state.doc && uid.value === state.doc.createdBy
+    () => state.doc && uid.value === state.doc.createdBy,
   )
 
   return {
