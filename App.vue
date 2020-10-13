@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import firebaseConfig from './firebase.config.js'
-import { initFirebase, useAuth, useCollection, useDoc } from './src/index.js'
+import firebaseConfig from './firebase.config'
+import { initFirebase, useAuth, useCollection, useDoc } from './src/index'
 
 export default {
   setup() {
